@@ -19,7 +19,7 @@ fn main() {
                 .map(|w| w[1] - w[0])
                 .collect::<Vec<i32>>();
 
-            if diffs.iter().all(|x| *x > 0 && *x < 4) {
+            if diffs.into_iter().all(|x| x > 0 && x < 4) {
                 // println!("{:?}", reports);
                 // println!("{:?}\n", diffs);
                 count += 1;
@@ -34,7 +34,7 @@ fn main() {
                 .map(|w| w[1] - w[0])
                 .collect::<Vec<i32>>();
 
-            if diffs.iter().all(|x| *x > 0 && *x < 4) {
+            if diffs.into_iter().all(|x| x > 0 && x < 4) {
                 // println!("{:?}", rev_reports);
                 // println!("{:?}\n", diffs);
                 count += 1;
