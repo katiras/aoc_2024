@@ -1,4 +1,7 @@
-use std::io::{self, BufRead};
+use std::{
+    collections::HashSet,
+    io::{self, BufRead},
+};
 
 #[derive(Debug)]
 struct Rule {
@@ -33,7 +36,7 @@ fn main() {
         }
     }
 
-    let mut invalid_update_indexes: Vec<usize> = Vec::new();
+    let mut invalid_update_indexes: HashSet<usize> = HashSet::new();
 
     for rule in rules {
         for (i, update) in updates.iter().enumerate() {
@@ -42,15 +45,11 @@ fn main() {
                 update.iter().position(|&x| x == rule.after),
             ) {
                 if before_index > after_index {
-                    invalid_update_indexes.push(i);
-                    continue;
+                    invalid_update_indexes.insert(i);
                 }
             }
         }
     }
-
-    invalid_update_indexes.sort_unstable();
-    invalid_update_indexes.dedup();
 
     for (i, update) in updates.iter().enumerate() {
         if !invalid_update_indexes.contains(&i) {
