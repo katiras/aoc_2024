@@ -16,8 +16,6 @@ fn main() {
     let mut updates: Vec<Vec<usize>> = Vec::new();
     let mut rules: Vec<Rule> = Vec::new();
 
-    let mut already_sorted_count = 0;
-
     for line in reader.lines().map_while(Result::ok) {
         if line.len() > 5 {
             let update = line
@@ -36,6 +34,7 @@ fn main() {
         }
     }
 
+    let mut already_sorted_count = 0;
     let mut sorted_sum = 0;
 
     for mut update in updates {
