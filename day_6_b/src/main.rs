@@ -14,27 +14,45 @@ fn main() {
         grid.push(line.chars().collect());
     }
 
+    let mut sum = 0;
+
+    for row in 0..grid.len() {
+        for column in 0..grid[0].len() {
+            if grid[row][column] == '.' {
+                if is_guard_in_loop(grid.clone(), row as i32, column as i32) {
+                    sum += 1;
+                }
+            }
+        }
+    }
+
+    println!("{:?}", sum);
+}
+
+fn is_guard_in_loop(mut grid: Vec<Vec<char>>, obstacle_row: i32, obstacle_column: i32) -> bool {
     let mut guard = Guard::new(&grid);
 
-    let mut visited_tiles: HashSet<(i32, i32)> = HashSet::new();
+    grid[obstacle_row as usize][obstacle_column as usize] = '#';
+
+    let mut guard_states: HashSet<Guard> = HashSet::new();
 
     while guard.is_inside_grid(&grid) {
-        let current_char = grid[guard.r as usize][guard.c as usize];
-
-        if current_char == '#' {
+        if grid[guard.r as usize][guard.c as usize] == '#' {
             guard.go_backwards();
             guard.rotate_clockwise();
         }
 
-        visited_tiles.insert((guard.r, guard.c));
-
         guard.go_forward();
+
+        if !guard_states.insert(guard.clone()) {
+            return true;
+        }
     }
 
-    println!("{:?}", visited_tiles.len());
+    return false;
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq)]
 struct Guard {
     c: i32,
     r: i32,
