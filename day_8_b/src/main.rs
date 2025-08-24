@@ -10,6 +10,12 @@ struct Point {
     y: i32,
 }
 
+impl Point {
+    fn is_inside_grid(self: &Point, max_x: i32, max_y: i32) -> bool {
+        return self.x > -1 && self.x <= max_x && self.y > -1 && self.y <= max_y;
+    }
+}
+
 fn main() {
     let file = File::open("./input.txt").unwrap();
     let reader = BufReader::new(file);
@@ -55,7 +61,7 @@ fn main() {
                         y: popped_antenna.y - diff.y * multiplier,
                     };
 
-                    if !is_inside_grid(&antinode_a, max_x, max_y) {
+                    if !&antinode_a.is_inside_grid(max_x, max_y) {
                         break;
                     }
 
@@ -68,7 +74,7 @@ fn main() {
                         y: a.y + diff.y * multiplier,
                     };
 
-                    if !is_inside_grid(&antinode_b, max_x, max_y) {
+                    if !&antinode_b.is_inside_grid(max_x, max_y) {
                         break;
                     }
 
@@ -81,8 +87,4 @@ fn main() {
     let sum = antinodes.iter().count();
 
     println!("{:?}", sum);
-}
-
-fn is_inside_grid(point: &Point, max_x: i32, max_y: i32) -> bool {
-    return point.x > -1 && point.x <= max_x && point.y > -1 && point.y <= max_y;
 }
