@@ -49,9 +49,7 @@ fn main() {
                     y: a.y - popped_antenna.y,
                 };
 
-                let mut multiplier = 0;
-
-                loop {
+                for multiplier in 0.. {
                     let antinode_a = Point {
                         x: popped_antenna.x - diff.x * multiplier,
                         y: popped_antenna.y - diff.y * multiplier,
@@ -62,12 +60,9 @@ fn main() {
                     }
 
                     antinodes.insert(antinode_a);
-                    multiplier += 1;
                 }
 
-                multiplier = 0;
-
-                loop {
+                for multiplier in 0.. {
                     let antinode_b = Point {
                         x: a.x + diff.x * multiplier,
                         y: a.y + diff.y * multiplier,
@@ -78,7 +73,6 @@ fn main() {
                     }
 
                     antinodes.insert(antinode_b);
-                    multiplier += 1;
                 }
             }
         }
