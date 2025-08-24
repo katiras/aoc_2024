@@ -49,22 +49,36 @@ fn main() {
                     y: a.y - popped_antenna.y,
                 };
 
-                let antinode_a = Point {
-                    x: popped_antenna.x - diff.x,
-                    y: popped_antenna.y - diff.y,
-                };
+                let mut multiplier = 0;
 
-                if is_inside_grid(&antinode_a, max_x, max_y) {
+                loop {
+                    let antinode_a = Point {
+                        x: popped_antenna.x - diff.x * multiplier,
+                        y: popped_antenna.y - diff.y * multiplier,
+                    };
+
+                    if !is_inside_grid(&antinode_a, max_x, max_y) {
+                        break;
+                    }
+
                     antinodes.insert(antinode_a);
+                    multiplier += 1;
                 }
 
-                let antinode_b = Point {
-                    x: a.x + diff.x,
-                    y: a.y + diff.y,
-                };
+                multiplier = 0;
 
-                if is_inside_grid(&antinode_b, max_x, max_y) {
+                loop {
+                    let antinode_b = Point {
+                        x: a.x + diff.x * multiplier,
+                        y: a.y + diff.y * multiplier,
+                    };
+
+                    if !is_inside_grid(&antinode_b, max_x, max_y) {
+                        break;
+                    }
+
                     antinodes.insert(antinode_b);
+                    multiplier += 1;
                 }
             }
         }
