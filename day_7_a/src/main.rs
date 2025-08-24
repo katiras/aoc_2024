@@ -20,7 +20,7 @@ fn main() {
             .map(|x| x.parse::<usize>().unwrap())
             .collect::<Vec<usize>>();
 
-        if matches_total(&list, None, total) {
+        if is_match(&list, None, total) {
             sum += total;
         }
     }
@@ -28,13 +28,13 @@ fn main() {
     println!("{:?}", sum);
 }
 
-fn matches_total(remaining_items: &[usize], current_total: Option<usize>, match_number: usize) -> bool {
-    if remaining_items.is_empty() {
-        return current_total.unwrap() == match_number;
+fn is_match(remaining_items: &[usize], current_total: Option<usize>, total: usize) -> bool {
+    if remaining_items.is_empty() || current_total.unwrap_or(0) > total {
+        return current_total.unwrap() == total;
     }
 
     let (first, rest) = remaining_items.split_first().unwrap();
 
-    return matches_total(rest, Some(current_total.unwrap_or(0) + first), match_number)
-        || matches_total(rest, Some(current_total.unwrap_or(1) * first), match_number);
+    return is_match(rest, Some(current_total.unwrap_or(0) + first), total)
+        || is_match(rest, Some(current_total.unwrap_or(1) * first), total);
 }
