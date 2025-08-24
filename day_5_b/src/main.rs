@@ -1,6 +1,6 @@
 use std::{
     cmp::Ordering,
-    collections::{HashSet},
+    collections::HashSet,
     io::{self, BufRead},
 };
 
